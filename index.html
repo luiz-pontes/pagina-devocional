@@ -1,147 +1,75 @@
-import streamlit as st
-import datetime
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vida Na Palavra - Seu Devocional Diário</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-# --- CONFIGURAÇÃO DA PÁGINA ---
-st.set_page_config(
-    page_title="Vida Na Palavra",
-    page_icon="📖",
-    layout="wide"
-)
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="container">
+            <span class="badge">📖 Aplicativo Exclusivo</span>
+            <h1>Fortaleça sua fé diariamente com o **Vida Na Palavra**</h1>
+            <p>Um aplicativo simples e transformador para guiar seus momentos com Deus, organizar suas reflexões e manter sua rotina de oração viva todos os dias.</p>
+            <a href="https://pay.kiwify.com.br/SEU_LINK_AQUI" class="btn-primary">QUERO MEU ACESSO AGORA</a>
+            <p class="subtext">🔒 Acesso imediato e vitalício após a confirmação</p>
+        </div>
+    </header>
 
-# --- INICIALIZAÇÃO DO ESTADO DA SESSÃO ---
-if "favoritos" not in st.session_state:
-    st.session_state["favoritos"] = []
+    <!-- RECURSOS -->
+    <section class="features">
+        <div class="container">
+            <h2>Tudo o que você precisa em um só lugar</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="icon">📅</div>
+                    <h3>Palavra Diária</h3>
+                    <p>Uma mensagem bíblica selecionada e contextualizada para cada dia do ano, garantindo direção espiritual diária.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">✍️</div>
+                    <h3>Diário Espiritual</h3>
+                    <p>Espaço reservado para registrar o que Deus falou ao seu coração e acompanhar seu crescimento espiritual.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">⭐</div>
+                    <h3>Favoritos</h3>
+                    <p>Guarde e releia facilmente as mensagens e versículos que mais tocaram a sua vida sempre que precisar.</p>
+                </div>
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <h3>Acesso Prático</h3>
+                    <p>Funciona perfeitamente em celulares, tablets e computadores. Sua jornada com Deus a um clique de distância.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-if "anotacoes" not in st.session_state:
-    st.session_state["anotacoes"] = {}
+    <!-- OFERTA DA PÁGINA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>OFERTA ESPECIAL DE LANÇAMENTO</h2>
+                <p class="price-label">De <del>R$ 97,00</del> por apenas:</p>
+                <div class="price">R$ 29,90</div>
+                <p class="price-sub">Pagamento único • Sem mensalidades</p>
+                <a href="https://pay.kiwify.com.br/https://pay.kiwify.com.br/qYHN4yi" class="btn-primary">GARANTIR ACESSO COM DESCONTO</a>
+                <p class="guarantee">🛡️ Garantia incondicional de 7 dias</p>
+            </div>
+        </div>
+    </section>
 
-if "usuario_logado" not in st.session_state:
-    st.session_state["usuario_logado"] = "flsp1986@hotmail.com"
+    <!-- RODAPÉ -->
+    <footer>
+        <div class="container">
+            <p>© 2026 Vida Na Palavra — Todos os direitos reservados.</p>
+            <p>Desenvolvido por Luiz Pontes</p>
+        </div>
+    </footer>
 
-# --- BARRA LATERAL (SIDEBAR) ---
-st.sidebar.title("📖 Vida Na Palavra")
-st.sidebar.text(f"Usuário: {st.session_state['usuario_logado']}")
-
-if st.sidebar.button("Sair / Logout"):
-    st.session_state.clear()
-    st.rerun()
-
-st.sidebar.markdown("---")
-st.sidebar.subheader("Navegação")
-
-# Menu de navegação por rádio
-menu = st.sidebar.radio(
-    "Seleção de Tela",
-    ["Devocional Diário", "Meus Favoritos", "Painel Admin"],
-    label_visibility="collapsed"
-)
-
-# DATA ATUAL DO DEVOCIONAL
-data_hoje = datetime.date.today().strftime("%d/%m/%Y")
-
-
-# --- ROTA 1: DEVOCIONAL DIÁRIO ---
-if menu == "Devocional Diário":
-    st.title("📖 Devocional Diário")
-    
-    # Navegação de Datas
-    col_anterior, col_data, col_proximo = st.columns([1, 2, 1])
-    with col_anterior:
-        st.button("⬅️ Dia Anterior")
-    with col_data:
-        st.markdown(f"<h3 style='text-align: center;'>{data_hoje}</h3>", unsafe_allow_html=True)
-    with col_proximo:
-        st.button("Próximo Dia ➡️")
-
-    st.markdown("---")
-    
-    # Conteúdo do Devocional
-    st.header("A Renovação Diária da Fé")
-    st.subheader("📖 Lamentações 3:22-23")
-    st.write("As misericórdias do Senhor são a causa de não sermos consumidos; elas se renovam a cada manhã. Grande é a tua fidelidade.")
-
-    # Controle de Favoritos
-    devocional_id = f"Devocional_{data_hoje}"
-    e_favorito = devocional_id in st.session_state["favoritos"]
-    
-    btn_fav_text = "⭐ Removido dos Favoritos" if e_favorito else "⭐ Adicionar aos Favoritos"
-    if st.button(btn_fav_text):
-        if e_favorito:
-            st.session_state["favoritos"].remove(devocional_id)
-            st.success("Removido dos favoritos!")
-        else:
-            st.session_state["favoritos"].append(devocional_id)
-            st.success("Adicionado aos favoritos!")
-        st.rerun()
-
-    st.markdown("---")
-    st.subheader("💡 Fortalecimento Espiritual do Dia")
-    st.info("Deus renova as suas forças a cada amanhecer. Não carregue o peso de ontem no dia de hoje.")
-
-    st.markdown("---")
-    st.subheader("📝 Minhas Anotações e Reflexão Pessoal")
-    
-    # Recupera nota existente, se houver
-    nota_salva = st.session_state["anotacoes"].get(devocional_id, "")
-    
-    texto_reflexao = st.text_area(
-        "Escreva o que Deus falou ao seu coração hoje:",
-        value=nota_salva,
-        placeholder="Digite aqui sua oração, insight ou reflexão espiritual...",
-        height=150
-    )
-    
-    if st.button("💾 Salvar Anotação"):
-        if texto_reflexao.strip():
-            st.session_state["anotacoes"][devocional_id] = texto_reflexao
-            st.success("Anotação salva com sucesso! Acesse 'Meus Favoritos' no menu para visualizar ou imprimir.")
-        else:
-            st.warning("Escreva algo antes de salvar.")
-
-
-# --- ROTA 2: MEUS FAVORITOS E REFLEXÕES (TELA DE IMPRESSÃO) ---
-elif menu == "Meus Favoritos":
-    st.title("⭐ Meus Favoritos e Minhas Reflexões")
-    
-    # Criação das duas abas organizadas na tela central
-    tab_fav, tab_notas = st.tabs(["📌 Devocionais Favoritos", "📝 Minhas Anotações e Reflexões"])
-    
-    # --- ABA 1: DEVOCIONAIS FAVORITOS ---
-    with tab_fav:
-        if st.session_state["favoritos"]:
-            st.subheader("Devocionais Marcados como Favoritos:")
-            for item in st.session_state["favoritos"]:
-                st.success(f"⭐ {item} - A Renovação Diária da Fé (Lamentações 3:22-23)")
-        else:
-            st.info("Você ainda não favoritou nenhum devocional.")
-
-    # --- ABA 2: MINHAS ANOTAÇÕES E REFLEXÕES ---
-    with tab_notas:
-        if st.session_state["anotacoes"] and any(t.strip() for t in st.session_state["anotacoes"].values()):
-            st.subheader("Histórico de Reflexões Salvas:")
-            
-            texto_para_download = "=== MINHAS REFLEXÕES - DEVOCIONAL VIDA NA PALAVRA ===\n\n"
-            
-            # Percorre e exibe cada nota salva
-            for id_dev, texto in st.session_state["anotacoes"].items():
-                if texto.strip():
-                    st.markdown(f"**Data / Devocional:** `{id_dev}`")
-                    st.info(texto)
-                    texto_para_download += f"Devocional: {id_dev}\nReflexão: {texto}\n" + "-"*50 + "\n\n"
-            
-            st.markdown("---")
-            # Botão de Download para Impressão
-            st.download_button(
-                label="🖨️ Baixar / Imprimir Todas as Minhas Anotações (TXT)",
-                data=texto_para_download,
-                file_name="Minhas_Reflexoes_Vida_Na_Palavra.txt",
-                mime="text/plain"
-            )
-        else:
-            st.warning("Você ainda não salvou nenhuma anotação ou reflexão pessoal.")
-
-
-# --- ROTA 3: PAINEL ADMIN ---
-elif menu == "Painel Admin":
-    st.title("⚙️ Painel de Administração")
-    st.write("Gerenciamento de conteúdos e usuários do aplicativo.")
+</body>
+</html>
